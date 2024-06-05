@@ -1,0 +1,55 @@
+perbaikan mobilewallet:
+
+package com.ug9.eTransactionProject;
+
+public class MobileWallet extends DigitalPayment{
+    private long feeTransferBank = 6000;
+    private String noHp;
+
+    public MobileWallet(String nama, long saldo, String s) {
+        super(nama, saldo);
+        this.noHp = s;
+    }
+
+    @Override
+    public void transfer(DigitalPayment digitalPayment, long l) {
+        super.transfer(digitalPayment, l);
+        if(l < 0){
+            System.out.println("Nominal yang Anda input tidak valid!");
+        } else if (this.getSaldo() < l) {
+            System.out.println("Transfer gagal! Saldo Anda tidak mencukupi.");
+        }else{
+            if(this instanceof Ovo && digitalPayment instanceof Dana){
+                System.out.println("Akun Ovo tidak valid!");
+            } else if (this instanceof Dana && digitalPayment instanceof Ovo) {
+                System.out.println("Akun Dana tidak valid!");
+            }else {
+                if (digitalPayment instanceof BNImo || digitalPayment instanceof BRImo){
+                    digitalPayment.setSaldo(digitalPayment.getSaldo() + l);
+                    this.setSaldo(this.getSaldo() - l - feeTransferBank);
+                    digitalPayment.printBuktiTranfer(digitalPayment, l);
+                }else {
+                    digitalPayment.setSaldo(digitalPayment.getSaldo() + l);
+                    this.setSaldo(this.getSaldo() - l);
+                    digitalPayment.printBuktiTranfer(digitalPayment, l);
+                }
+            }
+        }
+    }
+
+    public long getFeeTransferBank() {
+        return feeTransferBank;
+    }
+
+    public void setFeeTransferBank(long feeTransferBank) {
+        this.feeTransferBank = feeTransferBank;
+    }
+
+    public String getNoHp() {
+        return noHp;
+    }
+
+    public void setNoHp(String noHp) {
+        this.noHp = noHp;
+    }
+}
