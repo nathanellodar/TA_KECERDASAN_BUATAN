@@ -1,0 +1,13 @@
+package com.ug9.eTransactionProject;
+
+public class Dana extends MobileWallet{
+
+    public Dana(String nama, long saldo, String s) {
+        super(nama, saldo, s);
+    }
+
+    @Override
+    public void transfer(DigitalPayment digitalPayment, long l) {
+        super.transfer(digitalPayment, l);
+    }
+}
